@@ -1,0 +1,188 @@
+{% extends 'base.html' %} {% block content %}
+
+<header class="d-flex align-items-center" style="height: 100px">
+  <div class="row" style="margin-left: 50px">
+    <div class="col-3">
+      <button style="width: 100px; height: 50px">Назад</button>
+    </div>
+    <div class="col-9">
+      <h2 class="text-center" style="margin-top: 5px">MARATHON SKILS 2016</h2>
+    </div>
+  </div>
+</header>
+
+<div>
+  <div class="d-grid align-items-center justify-content-center">
+    <h3 class="text-center m-5">BMI калькулятор</h3>
+    <div class="row">
+      <div class="col-6">
+        <form onsubmit="calculate(event)">
+          <div class="d-flex mb-1">
+            <div id="male" class="gender">
+              <!-- <img src="" alt=""> -->
+              Мужской
+            </div>
+            <div id="female" class="gender">
+              <!-- <img src="" alt=""> -->
+              Женский
+            </div>
+          </div>
+          <div class="mb-1">
+            <label class="form-label">Рост:</label>
+            <div class="d-flex">
+              <input
+                type="number"
+                min="0"
+                max="200"
+                id="rost"
+                class="form-control"
+                placeholder="170"
+                required
+              />
+              <p style="margin-left: 10px">см</p>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label class="form-label">Вес:</label>
+            <div class="d-flex">
+              <input
+                type="number"
+                min="0"
+                max="150"
+                id="ves"
+                class="form-control"
+                placeholder="70"
+                required
+              />
+              <p style="margin-left: 10px">кг</p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center m-4">
+            <button
+              style="width: 150px; height: 50px"
+              class="m-2"
+              type="submit"
+            >
+              Расчитать
+            </button>
+            <button style="width: 150px; height: 50px" class="m-2">
+              Отмена
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="col-6 align-items-center justify-content-center">
+        <div id="result_gender" class="gender">
+          <!-- <img src="" alt=""> -->
+          <p id="result_gender_text" style="color: white">sdvsdvsdv</p>
+        </div>
+        <div style="margin-left: 0px; font-size: 30px;" id="metka">
+            0%
+        </div>
+        <div style="width: 600px; height: 30px;" class="d-flex">
+            <div style="width: 150px; height: 30px; background-color: yellow;">
+
+            </div>
+            <div style="width: 150px; height: 30px; background-color: green;">
+
+            </div>
+            <div style="width: 150px; height: 30px; background-color: yellow;">
+
+            </div>
+            <div style="width: 150px; height: 30px; background-color: red;">
+
+            </div>
+        </div>
+        <div style="width: 600px; height: 30px;" class="d-flex">
+            <div style="width: 150px; height: 30px;" class="text-center">
+                Недостаточный
+            </div>
+            <div style="width: 150px; height: 30px;" class="text-center">
+                Здоровый
+            </div>
+            <div style="width: 150px; height: 30px;" class="text-center">
+                Избыточный
+            </div>
+            <div style="width: 150px; height: 30px;" class="text-center">
+                Ожирение
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gender {
+    background-color: #241d70;
+    padding: 10px;
+    color: white;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .active-gender {
+    border: 1px solid #241d70;
+    color: #241d70 !important;
+    background-color: white !important;
+  }
+</style>
+
+<script>
+  let male = document.getElementById("male");
+  let female = document.getElementById("female");
+  let rost = document.getElementById("rost");
+  let ves = document.getElementById("ves");
+  let gender = "male";
+  let metka = document.getElementById("metka");
+  let result_gender_text = document.getElementById("result_gender_text")
+
+  male.addEventListener("click", () => {
+    male.classList.add("active-gender");
+    female.classList.remove("active-gender");
+    gender = "male";
+  });
+
+  female.addEventListener("click", () => {
+    female.classList.add("active-gender");
+    male.classList.remove("active-gender");
+    gender = "female";
+  });
+
+  function calculateBMI(gender, height, weight) {
+    // Проверка пола и использование соответствующей формулы для расчета BMI
+    if (gender === "male") {
+      // Формула для мужчин: BMI = вес (кг) / (рост (м) * рост (м))
+      var heightInMeters = height / 100; // Перевод роста в метры
+      var bmi = weight / (heightInMeters * heightInMeters);
+      return bmi;
+    } else if (gender === "female") {
+      // Формула для женщин: BMI = вес (кг) / (рост (м) * рост (м))
+      var heightInMeters = height / 100; // Перевод роста в метры
+      var bmi = weight / (heightInMeters * heightInMeters);
+      return bmi;
+    } else {
+      // Если пол не определен, возвращает -1
+      return -1;
+    }
+  }
+
+  function calculate(event) {
+    event.preventDefault();
+    let bmi = calculateBMI(gender, Number(rost.value), Number(ves.value));
+    metka.style.marginLeft = `${600 / 100 * bmi}px`;
+    metka.innerText = `${parseInt(bmi)}%`;
+    if (bmi < 25) {
+        result_gender_text.innerText = "Недостаточный"
+    } else if (bmi > 25 && bmi < 50) {
+        result_gender_text.innerText = "Здоровый"
+    } else if (bmi > 50 && bmi < 75) {
+        result_gender_text.innerText = "Избыточный"
+    } else if (bmi > 75) {
+        result_gender_text.innerText = "Ожирение"
+    }
+    console.log(bmi)
+  }
+</script>
+
+{% endblock %}

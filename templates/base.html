@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Marathon</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+
+<body>
+
+    {% block content %}
+
+
+    {% endblock %}
+
+    <footer class="navbar-fixed-bottom row-fluid">
+        <div class="timer d-flex align-items-center justify-content-center">
+            <div class="timer__items">
+                <div class="timer__item timer_"></div>
+
+            </div>
+        </div>
+    </footer>
+    <script src="/static/js/bootstrap.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // конечная дата, например 1 июля 2021
+            const deadline = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1);
+            // id таймера
+            let timerId = null;
+            // склонение числительных
+            function declensionNum(num, words) {
+                return words[(num % 100 > 4 && num % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(num % 10 < 5) ? num % 10 : 5]];
+            }
+            // вычисляем разницу дат и устанавливаем оставшееся времени в качестве содержимого элементов
+            function countdownTimer() {
+                const diff = deadline - new Date();
+                if (diff <= 0) {
+                    clearInterval(timerId);
+                }
+                const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
+                const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
+                const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+                const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
+                $days.textContent = ` ${days < 10 ? '0' + days : days} ${declensionNum(days, ['день', 'дня', 'дней'])} ${hours < 10 ? '0' + hours : hours} ${declensionNum(hours, ['час', 'часа', 'часов'])} и ${minutes < 10 ? '0' + minutes : minutes} ${declensionNum(minutes, ['минута', 'минуты', 'минут'])} осталось до старта марафона!`;
+            }
+            // получаем элементы, содержащие компоненты даты
+            const $days = document.querySelector('.timer_');
+            // вызываем функцию countdownTimer
+            countdownTimer();
+            // вызываем функцию countdownTimer каждую секунду
+            timerId = setInterval(countdownTimer, 1000);
+        });
+    </script>
+</body>
+
+</html>

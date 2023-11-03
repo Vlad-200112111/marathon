@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+header {
+    background-color: #241d70;
+    color: white;
+    height: 300px;
+    width: 100%;
+}
+
+button {
+    /* background-color: #00903e; */
+    background-color: #241d70;
+    border: 1px solid #241d70;
+    color: #fff;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: #fff;
+    border: 1px solid #241d70;
+    color: #241d70;
+    transition: all 0.5s ease;
+}
+
+.button-main-page {
+    font-size: 20px;
+    padding: 50px;
+    width: 500px;
+    margin: 10px;
+}
+
+footer {
+    background-color: #241d70;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* flex: 0 0 auto; */
+}
+
+.timer__items {
+    display: flex;
+    font-size: 28px;
+}
+
+.timer__item {
+    color: white;
+}

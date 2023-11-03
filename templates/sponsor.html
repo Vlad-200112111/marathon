@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<header class="d-flex align-items-center" style="height: 100px;">
+    <div class="row" style="margin-left: 50px;">
+        <div class="col-3">
+            <button style="width: 100px; height: 50px;">Назад</button>
+        </div>
+        <div class="col-9">
+            <h2 class="text-center" style="margin-top: 5px;">MARATHON SKILS 2016</h2>
+        </div>
+    </div>
+</header>
+
+<div>
+    <div class="d-grid align-items-center justify-content-center">
+        <h3 class="text-center mt-5">Споснор бегуна</h3>
+        <h5 class="text-center mb-5 w-50">Пожулайста, выберите бегуна, которого вы хотели бы спонсировать и сумму,
+            уоторую вы
+            хотели бы спонсировать. Спасибо за вашу поддержку бегунов и их благотворительных организаций.
+        </h5>
+        <form>
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="text-center">Информация о спонсоре</h5>
+                    <div class="mb-2">
+                        <label for="exampleInputEmail1" class="form-label">Ваше имя:</label>
+                        <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Ваше имя">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Бегун</label>
+                        <select class="form-select">
+                            <option value="male">Мужской</option>
+                            <option value="female">Женский</option>
+                        </select>
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Карта:</label>
+                        <input type="text" class="form-control" placeholder="Владелец карты">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Номер карты #:</label>
+                        <input type="text" class="form-control" placeholder="1234 1234 1234 1234"
+                            data-format="**** **** ****" data-mask="**** **** ****">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Срок действия:</label>
+                        <div class="d-flex">
+                            <input type="text" class="form-control" placeholder="01" data-format="**" data-mask="**">
+                            <input type="text" class="form-control" placeholder="2017" data-format="****"
+                                data-mask="****">
+                        </div>
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">CVC:</label>
+                        <input type="text"  class="form-control" placeholder="123" data-format="***" data-mask="***">
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <h5 class="text-center">Благотоворительность</h5>
+                    <h4 class="text-center">Фонд Кошек</h4>
+                    <h5 class="text-center">Сумма пожертвования</h5>
+                    <p style="font-size: 60px;" class="text-center" id="price">$0</p>
+                    <div class="d-flex justify-content-center m-4">
+                        <button onclick="minus(event)" style="width: 50px; height: 50px;" class="m-2">-</button>
+                        <input onchange="updatePrice(event)" type="number" min="0" id="priceinput" class="form-control"
+                            style="width: 150px;">
+                        <button onclick="plus(event)" style="width: 50px; height: 50px;" class="m-2">+</button>
+                    </div>
+                    <div class="d-flex justify-content-center m-4">
+                        <button style="width: 150px; height: 50px;" class="m-2" type="submit">Заплатить</button>
+                        <button style="width: 150px; height: 50px;" class="m-2" type="submit">Отмена</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let price = 0;
+
+    const plus = (event) => {
+        event.preventDefault()
+        if (check(price++) === false) {
+            return
+        }
+        document.getElementById("price").innerHTML = `$${price}`;
+        document.getElementById("priceinput").innerHTML = price;
+    }
+
+    const minus = (event) => {
+        event.preventDefault()
+        if (check(price--) === false) {
+            return
+        }
+        document.getElementById("price").innerHTML = `$${price}`;
+        document.getElementById("priceinput").innerHTML = price;
+    }
+
+    function updatePrice(event) {
+        if (check(event.target.value) === false) {
+            return
+        }
+        price = event.target.value;
+        document.getElementById("price").innerHTML = `$${price}`;
+
+    }
+
+    const check = (io) => {
+        if (io < 0) {
+            price = 0
+            document.getElementById("price").innerHTML = `$0`;
+            document.getElementById("priceinput").innerHTML = `0`;
+            return false;
+        }
+    }
+
+    function doFormat(value, pattern, mask) {
+        // удаляем все нечисловые значения из значения
+        const strippedValue = value.replace(/[^0-9]/g, "");
+
+        // преобразуем строку-значение в массив символов
+        const chars = strippedValue.split('');
+
+
+        let count = 0;
+        let formatted = '';
+
+        // форматируем строку
+        for (let i = 0; i < pattern.length; i++) {
+            const char = pattern[i];
+            if (chars[count]) {
+                if (/\*/.test(char)) {
+                    formatted += chars[count];
+                    count++;
+                } else {
+                    formatted += char;
+                }
+            }
+            else if (mask) {
+                const splittedMask = mask.split('');
+
+                if (splittedMask[i]) {
+                    formatted += splittedMask[i];
+                }
+            }
+        }
+
+
+        return formatted;
+    }
+
+
+    // проходимся по каждому элементу назначая на них обработчики
+    // нажатия клавиш
+    document.querySelectorAll('[data-mask]').forEach(function (e) {
+
+
+        function format(elem) {
+            const val = doFormat(elem.value, elem.getAttribute('data-format'));
+            elem.value = doFormat(elem.value, elem.getAttribute('data-format'), elem.getAttribute('data-mask'));
+
+            if (elem.createTextRange) {
+                var range = elem.createTextRange();
+                range.move('character', val.length);
+                range.select();
+            } else if (elem.selectionStart) {
+                elem.focus();
+                elem.setSelectionRange(val.length, val.length);
+            }
+        }
+
+        e.addEventListener('keyup', function () {
+            format(e);
+        });
+
+        e.addEventListener('keydown', function () {
+            format(e);
+        });
+
+        format(e)
+    });
+</script>
+</script>
+
+{% endblock %}

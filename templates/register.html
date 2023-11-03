@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<header class="d-flex align-items-center" style="height: 100px;">
+    <div class="row" style="margin-left: 50px;">
+        <div class="col-3">
+            <button style="width: 100px; height: 50px;">Назад</button>
+        </div>
+        <div class="col-9">
+            <h2 class="text-center" style="margin-top: 5px;">MARATHON SKILS 2016</h2>
+        </div>
+    </div>
+</header>
+
+<div>
+    <div class="d-grid align-items-center justify-content-center">
+        <h3 class="text-center mt-5">Регистрация бегуна</h3>
+        <h5 class="text-center mb-5">Пожалуйста, заполните всю информацию, чтобы зарегистрироваться в качестве бегуна.
+        </h5>
+        <form>
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-2">
+                        <label for="exampleInputEmail1" class="form-label">Email</label>
+                        <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" placeholder="Пароль">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Повторите пароль</label>
+                        <input type="password" class="form-control" placeholder="Повторите пароль">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Имя</label>
+                        <input type="text" class="form-control" placeholder="Имя">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Фамилия</label>
+                        <input type="text" class="form-control" placeholder="Фамилия">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Отчество</label>
+                        <input type="text" class="form-control" placeholder="Отчество">
+                    </div>
+                    <div class="mb-1">
+                        <label for="exampleInputPassword1" class="form-label">Пол</label>
+                        <select class="form-select">
+                            <option value="male">Мужской</option>
+                            <option value="female">Женский</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button style="width: 150px; height: 50px;" class="m-2" type="submit">Регистрация</button>
+                    <button style="width: 150px; height: 50px;" class="m-2" type="submit">Отмена</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
