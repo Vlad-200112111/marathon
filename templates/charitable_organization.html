@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <header class="d-flex align-items-center" style="height: 100px;">
+        <div class="row" style="margin-left: 50px;">
+            <div class="col-3">
+                <button style="width: 100px; height: 50px;">Назад</button>
+            </div>
+            <div class="col-9">
+                <h2 class="text-center" style="margin-top: 5px;">MARATHON SKILS 2016</h2>
+            </div>
+        </div>
+    </header>
+
+    <div>
+        <div class="m-5">
+            <h3 class="text-center m-5">Список благотворительных организаций</h3>
+            {% for charitable_organization in charitable_organizations %}
+                <div class="row mb-3">
+                    <div class="col-2">
+                        <img style="width: 250px; border-radius: 100%" src="{{ charitable_organization.image.url }}" alt="">
+                    </div>
+                    <div class="col-10">
+                            <h4>
+                                {{ charitable_organization.name }}
+                            </h4>
+                            <p>
+                                {{ charitable_organization.caption }}
+                            </p>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

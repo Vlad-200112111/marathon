@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include, re_path
+from django.conf.urls.static import static
+from django.conf import settings
 
 from marathon.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/', include('marathon.urls')),
     path('', IndexView.as_view(), name='index'),
     path('register-as-runner/', RegisterAsRunnerView.as_view(), name='register_as_runner'),
     path('login/', LoginView.as_view(), name='login'),
@@ -29,5 +33,6 @@ urlpatterns = [
     path('about/', AboutView.as_view(), name='about'),
     path('bmi/', BMIView.as_view(), name='bmi'),
     path('bmr/', BMRView.as_view(), name='bmr'),
+    path('charitable-organizations/', CharitableOrganizationView.as_view(), name='charitable_organizations'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
