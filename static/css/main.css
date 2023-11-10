@@ -11,6 +11,103 @@ header {
     width: 100%;
 }
 
+.modal {
+    /* Подложка будет занимать 100% площади экрана*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    /* Скрываем подложку с модальным окном*/
+    display: none;
+    /* Overflow позволит нам скроллить модальное окно, если контента в нём будет больше, чем может поместиться на экране */
+    overflow-y: auto;
+    /* Цвет подложки */
+    background: rgba(0, 0, 0, 0.8);
+    /* Размытие фона */
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    /* Анимация появления */
+    animation: fadeIn 250ms ease-in-out;
+    /* Добавляем дополнительные стили */
+    align-items: flex-start;
+    justify-content: center;
+    padding: 5vh 0 10vh;
+    /* Через JavaScript мы будем добавлять атрибут open, что должно сделать модальное окно видимым*/
+}
+
+.modal[open] {
+    display: flex;
+}
+
+.modal .dialog {
+    /* Стилизуем само модальное окно */
+    width: 100%;
+    max-width: 960px;
+    min-height: 100px;
+    border-radius: 4px;
+    position: relative;
+    border: none;
+    color: #000000;
+    font-weight: 300;
+}
+
+.modal .dialog .dialog-close {
+    /* Стилизуем кнопку закрытия модального окна */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3em;
+    height: 3em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.modal .dialog .dialog-close::before,
+.modal .dialog .dialog-close::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    left: 5px;
+    border-bottom: 1px solid white;
+    transform: rotate(45deg);
+}
+
+.modal .dialog .dialog-close::after {
+    transform: rotate(-45deg);
+}
+
+.modal .dialog .dialog-close:focus::before,
+.modal .dialog .dialog-close:hover::before,
+.modal .dialog .dialog-close:focus::after,
+.modal .dialog .dialog-close:hover::after {
+    border-color: #000000;
+}
+
+.modal .dialog .dialog-content {
+    /* Дополнительные стили для контента*/
+    padding: 2em;
+    background-color: rgb(255, 255, 255);
+    border: none;
+}
+
+/* Анимация появления*/
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 button {
     /* background-color: #00903e; */
     background-color: #241d70;

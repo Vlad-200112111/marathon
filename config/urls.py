@@ -23,16 +23,21 @@ from django.conf import settings
 from marathon.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/', include('marathon.urls')),
-    path('', IndexView.as_view(), name='index'),
-    path('register-as-runner/', RegisterAsRunnerView.as_view(), name='register_as_runner'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('register/', RegisterView.as_view(), name='register'),
-    path('sponsor/', SponsorView.as_view(), name='sponsor'),
-    path('about/', AboutView.as_view(), name='about'),
-    path('bmi/', BMIView.as_view(), name='bmi'),
-    path('bmr/', BMRView.as_view(), name='bmr'),
-    path('charitable-organizations/', CharitableOrganizationView.as_view(), name='charitable_organizations'),
+                  path('admin/', admin.site.urls),
+                  path('api/v1/', include('marathon.urls')),
+                  path('', IndexView.as_view(), name='index'),
+                  path('register-as-runner/', RegisterAsRunnerView.as_view(), name='register_as_runner'),
+                  path('login/', user_login, name='login'),
+                  path('register/', RegisterView.as_view(), name='register'),
+                  path('sponsor/', SponsorView.as_view(), name='sponsor'),
+                  path('about/', AboutView.as_view(), name='about'),
+                  path('bmi/', BMIView.as_view(), name='bmi'),
+                  path('bmr/', BMRView.as_view(), name='bmr'),
+                  path('charitable-organizations/', CharitableOrganizationView.as_view(),
+                       name='charitable_organizations'),
+                  path('menu-admin/', AdminView.as_view(), name='menu_admin'),
+                  path('menu-runner/', RunnerView.as_view(), name='menu_runner'),
+                  path('menu-coordinator/', CoordinatorView.as_view(), name='menu_coordinator'),
+                  path('my-sponsor/', MySponsorView.as_view(), name='my_sponsor'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

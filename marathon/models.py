@@ -32,13 +32,6 @@ class User(AbstractUser):
         verbose_name = "user"
         verbose_name_plural = "users"
 
-    def get_full_name(self):
-        full_name = "%s %s" % (self.first_name, self.last_name)
-        return full_name.strip()
-
-    def get_short_name(self):
-        return self.first_name
-
 
 class CategoryRunner(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -74,6 +67,12 @@ class Runner(models.Model):
         CategoryRunner,
         on_delete=models.CASCADE,
         null=False,
+    )
+    charitable_organization = models.ForeignKey(
+        CharitableOrganization,
+        on_delete=models.CASCADE,
+        null=True,
+        default=None
     )
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -175,11 +174,6 @@ class MarathonResult(models.Model):
     )
     marathon = models.ForeignKey(
         Marathon,
-        on_delete=models.CASCADE,
-        null=False,
-    )
-    charitable_organization = models.ForeignKey(
-        CharitableOrganization,
         on_delete=models.CASCADE,
         null=False,
     )
